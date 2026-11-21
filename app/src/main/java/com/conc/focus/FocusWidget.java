@@ -22,7 +22,7 @@ public class FocusWidget extends AppWidgetProvider {
         if (ACTION_START.equals(intent.getAction())) {
             if (!FocusState.isActive(context)) {
                 if (!FocusState.begin(context)) {
-                    Toast.makeText(context, "먼저 CONC 앱에서 차단 앱과 접근성 권한을 설정해줘!",
+                    Toast.makeText(context, "먼저 CONC 앱에서 접근성 권한을 켜줘!",
                             Toast.LENGTH_LONG).show();
                     Intent setup = new Intent(context, MainActivity.class)
                             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
