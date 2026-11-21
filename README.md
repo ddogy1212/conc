@@ -24,3 +24,5 @@
 
 ## CI 확인
 GitHub Actions PR build validates that the APK can be compiled.
+
+CI retry after setup tool correction.
