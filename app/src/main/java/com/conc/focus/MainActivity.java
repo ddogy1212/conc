@@ -149,13 +149,13 @@ public class MainActivity extends Activity {
         clockLabel = text("", 23, dark, true);
         statusBox.addView(clockLabel);
         addGap(statusBox, 5);
-        statusBox.addView(text(active ? "30분이 지나면 선택한 앱이 자동으로 열려요." :
+        statusBox.addView(text(active ? "30분 후 허용하지 않은 앱의 차단이 자동으로 풀려요." :
                 "위젯을 한 번 누르면 바로 30분 시작!", 13, Color.DKGRAY, false));
         addGap(statusBox, 12);
         Button begin = button(active ? "집중 중 · 중단 버튼 없음" : "여기서도 30분 집중 시작",
                 !active, () -> {
-                    if (!FocusState.isServiceEnabled(this) || FocusState.chosenApps(this).isEmpty()) {
-                        Toast.makeText(this, "앱을 선택하고 접근성 권한부터 켜줘!", Toast.LENGTH_LONG).show();
+                    if (!FocusState.isServiceEnabled(this)) {
+                        Toast.makeText(this, "접근성 권한부터 켜줘!", Toast.LENGTH_LONG).show();
                         return;
                     }
                     FocusState.begin(this);
@@ -179,9 +179,9 @@ public class MainActivity extends Activity {
         }));
         addGap(content, 25);
 
-        sectionTitle(content, "② 차단할 앱 선택", active ?
-                "집중 중에는 차단 목록을 변경할 수 없어요." :
-                "체크한 앱만 30분 동안 가려져요. 전화와 시스템 필수 앱은 제외해요.");
+        sectionTitle(content, "② 집중 중 허용할 앱 선택", active ?
+                "집중 중에는 허용 목록을 변경할 수 없어요." :
+                "체크한 앱만 사용 가능해요. 체크하지 않은 앱은 모두 차단돼요. 전화·설정 등 필수 기능은 예외예요.");
 
         Set<String> selected = FocusState.chosenApps(this);
         List<ResolveInfo> apps = installedLauncherApps();
@@ -213,7 +213,7 @@ public class MainActivity extends Activity {
             box.setOnCheckedChangeListener((v, checked) -> {
                 Set<String> change = FocusState.chosenApps(this);
                 if (checked) change.add(pkg); else change.remove(pkg);
-                FocusState.saveApps(this, change);
+                FocusState.saveAllowedApps(this, change);
             });
             entry.addView(box);
             entry.setOnClickListener(v -> { if (!active) box.setChecked(!box.isChecked()); });
@@ -250,7 +250,7 @@ public class MainActivity extends Activity {
 
         sectionTitle(content, "④ 홈 화면 위젯 설치", "홈 화면 빈 곳을 길게 누른 다음 위젯 → CONC → 1×1을 선택해줘.");
         content.addView(text("설정 완료 후에는 위젯을 한 번 탭할 때 즉시 시작하며, 앱 안에는 중도 취소 기능이 없어요. "
-                + "단, 안드로이드 자체 설정에서 권한을 끄거나 앱을 삭제하는 것까지 막을 수는 없어요. "
+                + "허용 목록에 없는 앱은 집중 중 차단돼요. 단, 안드로이드 설정에서 권한을 끄거나 앱을 삭제하는 것까지 막을 수는 없어요. "
                 + "긴급 전화 기능은 계속 사용할 수 있어요.", 13, Color.DKGRAY, false));
         addGap(content, 20);
     }
