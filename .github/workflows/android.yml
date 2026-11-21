@@ -6,6 +6,8 @@ on:
     paths-ignore:
       - 'downloads/**'
   workflow_dispatch:
+  issues:
+    types: [opened]
 
 permissions:
   contents: write
