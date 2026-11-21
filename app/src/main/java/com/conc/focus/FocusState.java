@@ -15,7 +15,7 @@ import java.util.Set;
 
 public final class FocusState {
     private static final String PREFS = "conc_focus_prefs";
-    private static final long DURATION = 30 * 60 * 1000L;
+    private static final long DURATION = 2 * 60 * 60 * 1000L;
 
     private FocusState() {}
 
