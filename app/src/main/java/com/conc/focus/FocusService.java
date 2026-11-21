@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * Restricts ONLY packages selected by the owner, during the 30-minute window.
+ * Restricts ALL non-essential packages except those explicitly allowed by the owner during the 30-minute window.
  *
  * Window-change events can originate from the blocking overlay itself. This
  * service checks the real underlying application window instead of treating
@@ -182,7 +182,7 @@ public class FocusService extends AccessibilityService {
         container.addView(timer);
 
         TextView note = new TextView(this);
-        note.setText("30분이 끝나면 자동으로 열려요.\n홈 화면으로 돌아가 다른 일을 해보자 💜");
+        note.setText("30분 뒤 자동으로 제한이 해제돼요.\n홈 화면으로 돌아가 다른 일을 해보자 💜");
         note.setTextColor(Color.rgb(213, 201, 232));
         note.setTextSize(15);
         note.setGravity(Gravity.CENTER);
