@@ -183,7 +183,9 @@ public class MainActivity extends Activity {
                 "집중 중에는 허용 목록을 변경할 수 없어요." :
                 "체크한 앱만 사용 가능해요. 체크하지 않은 앱은 모두 차단돼요. 전화·설정 등 필수 기능은 예외예요.");
 
-        Set<String> selected = FocusState.chosenApps(this);
+        Set<String> selected = FocusState.allowedApps(this);
+        content.addView(text("집중 중 사용 허용: " + selected.size() + "개 · 체크하지 않은 앱은 차단", 13, purple, true));
+        addGap(content, 12);
         List<ResolveInfo> apps = installedLauncherApps();
         if (apps.isEmpty()) {
             content.addView(text("선택 가능한 앱을 찾지 못했어요.", 13, Color.GRAY, false));
@@ -211,7 +213,7 @@ public class MainActivity extends Activity {
             box.setChecked(selected.contains(pkg));
             box.setEnabled(!active);
             box.setOnCheckedChangeListener((v, checked) -> {
-                Set<String> change = FocusState.chosenApps(this);
+                Set<String> change = FocusState.allowedApps(this);
                 if (checked) change.add(pkg); else change.remove(pkg);
                 FocusState.saveAllowedApps(this, change);
             });
