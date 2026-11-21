@@ -50,9 +50,12 @@ public class FocusWidget extends AppWidgetProvider {
     private static RemoteViews views(Context context) {
         RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.conc_widget);
         boolean active = FocusState.isActive(context);
-        rv.setTextViewText(R.id.widget_status, active ? (int) Math.ceil(
-                FocusState.remainingMillis(context) / 60000.0) + "분" : "2시간");
-        rv.setTextViewText(R.id.widget_title, active ? "FOCUS" : "CONC");
+        // Photo-only widget: state is provided to accessibility services,
+        // never drawn as text over the selected photograph.
+        rv.setContentDescription(R.id.widget_root, active
+                ? "CONC 집중 중. 남은 시간 " + (long) Math.ceil(
+                    FocusState.remainingMillis(context) / 60000.0) + "분"
+                : "CONC 2시간 집중 시작");
 
         File photo = new File(context.getFilesDir(), "chosen_widget.png");
         if (photo.exists()) {
