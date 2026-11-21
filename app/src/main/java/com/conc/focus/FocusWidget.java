@@ -51,7 +51,7 @@ public class FocusWidget extends AppWidgetProvider {
         RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.conc_widget);
         boolean active = FocusState.isActive(context);
         rv.setTextViewText(R.id.widget_status, active ? (int) Math.ceil(
-                FocusState.remainingMillis(context) / 60000.0) + "분" : "시작");
+                FocusState.remainingMillis(context) / 60000.0) + "분" : "2시간");
         rv.setTextViewText(R.id.widget_title, active ? "FOCUS" : "CONC");
 
         File photo = new File(context.getFilesDir(), "chosen_widget.png");
