@@ -23,13 +23,13 @@ public final class FocusState {
         return context.getApplicationContext().getSharedPreferences(PREFS, Context.MODE_PRIVATE);
     }
 
-    public static Set<String> chosenApps(Context context) {
-        return new HashSet<>(prefs(context).getStringSet("chosen_apps", Collections.emptySet()));
+    public static Set<String> allowedApps(Context context) {
+        return new HashSet<>(prefs(context).getStringSet("allowed_apps", Collections.emptySet()));
     }
 
-    public static void saveApps(Context context, Set<String> apps) {
+    public static void saveAllowedApps(Context context, Set<String> apps) {
         if (isActive(context)) return;
-        prefs(context).edit().putStringSet("chosen_apps", new HashSet<>(apps)).apply();
+        prefs(context).edit().putStringSet("allowed_apps", new HashSet<>(apps)).apply();
     }
 
     public static boolean isProtected(String pkg) {
@@ -87,12 +87,12 @@ public final class FocusState {
     }
 
     public static boolean blocked(Context context, String pkg) {
-        return isActive(context) && !isProtected(pkg) && chosenApps(context).contains(pkg);
+        return isActive(context) && !isProtected(pkg) && !allowedApps(context).contains(pkg);
     }
 
     public static boolean begin(Context context) {
         if (isActive(context)) return true;
-        if (!isServiceEnabled(context) || chosenApps(context).isEmpty()) return false;
+        if (!isServiceEnabled(context)) return false;
 
         long nowElapsed = SystemClock.elapsedRealtime();
         long until = nowElapsed + DURATION;
