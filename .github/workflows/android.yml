@@ -8,6 +8,8 @@ on:
   workflow_dispatch:
   issues:
     types: [opened]
+  pull_request:
+    branches: [main]
 
 permissions:
   contents: write
@@ -37,6 +39,7 @@ jobs:
           name: conc-debug-apk
           path: app/build/outputs/apk/debug/app-debug.apk
       - name: Publish direct-download APK to repository
+        if: github.event_name != 'pull_request'
         run: |
           mkdir -p downloads
           cp app/build/outputs/apk/debug/app-debug.apk downloads/conc-debug.apk
