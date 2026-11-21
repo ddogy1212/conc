@@ -11,13 +11,13 @@
 - 전화·긴급 서비스·시스템 설정·CONC·런처 등 안전에 필요한 앱 차단 제외
 
 ## 설치
-1. GitHub Actions가 빌드에 성공하면 [`conc-debug.apk`](downloads/conc-debug.apk)를 선택해 설치할 수 있습니다. (이 파일이 아직 없으면 Actions → Build installable Android APK → Run workflow)
+1. [GitHub Actions 빌드](https://github.com/ddogy1212/conc/actions/workflows/android.yml)의 최신 성공 실행을 열어 **Artifacts → CONC-2h-photo-only-debug-APK**를 내려받고, ZIP 안의 `app-debug.apk`를 설치합니다. 저장소의 `downloads/conc-debug.apk`는 과거 시험판일 수 있으므로 사용하지 마세요.
 2. CONC 앱 실행 → **사용을 허용할 앱** 선택 (체크하지 않은 앱은 차단)
 3. 앱 안에서 `접근성 설정 열기` → **CONC 앱 집중 제한** 허용 (처음 한 번만)
 4. 홈 화면 길게 누르기 → 위젯 → CONC → **1×1** 배치
 5. 그다음부터 위젯을 누르면 즉시 2시간 집중 시작!
 
-> 안드로이드에서 일반 앱이 설정 변경·권한 해제·앱 제거를 원천 차단할 수는 없습니다. 접근성 서비스를 본인이 끄면 차단도 멈춥니다. 기존 차단 앱 선택 목록은 허용 앱 목록으로 자동 전환되지 않으며, 새로 허용 앱을 설정해야 합니다. 긴급 통화나 기기 설정 기능을 막지 않습니다.
+> 안드로이드에서 일반 앱이 설정 변경·권한 해제·앱 제거를 원천 차단할 수는 없습니다. 접근성 서비스를 본인이 끄면 차단도 멈춥니다. 기존 차단 앱 선택 목록은 허용 앱 목록으로 자동 전환되지 않으며, 새로 허용 앱을 설정해야 합니다. 접근성 서비스가 종료되거나 권한이 해제되면 차단이 중지될 수 있습니다. 긴급 통화나 기기 설정 기능을 막지 않습니다.
 
 ## 개발 / APK 빌드
-`gradle :app:assembleDebug` (Gradle 8.9, JDK 17, Android SDK 35). GitHub Actions가 컴파일하고 결과를 `downloads/conc-debug.apk`로 자동 커밋합니다. 앱의 기본 설치 아이콘은 사진으로 동적 변경할 수 없지만, 앱에서 선택한 사진으로 별도 홈 화면 바로가기를 만들 수 있습니다.
+`gradle :app:assembleDebug` (Gradle 8.9, JDK 17, Android SDK 35). GitHub Actions가 컴파일하고 APK를 빌드 실행의 Artifacts로 제공합니다. CI에서 저장소의 APK를 자동 덮어쓰지는 않습니다. 앱의 기본 설치 아이콘은 사진으로 동적 변경할 수 없지만, 앱에서 선택한 사진으로 별도 홈 화면 바로가기를 만들 수 있습니다.
