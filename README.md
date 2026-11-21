@@ -21,3 +21,6 @@
 
 ## 개발 / APK 빌드
 `gradle :app:assembleDebug` (Gradle 8.9, JDK 17, Android SDK 35). GitHub Actions가 컴파일하고 결과를 `downloads/conc-debug.apk`로 자동 커밋합니다. 앱의 기본 설치 아이콘은 사진으로 동적 변경할 수 없지만, 앱에서 선택한 사진으로 별도 홈 화면 바로가기를 만들 수 있습니다.
+
+## v1.2.0 검증
+기존의 차단 목록과 신규 허용 목록을 분리했고, 허용하지 않은 모든 일반 앱을 30분간 제한합니다. 기기 필수 기능은 유지합니다.
