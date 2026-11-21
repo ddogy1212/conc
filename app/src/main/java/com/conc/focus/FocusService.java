@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * Restricts ALL non-essential packages except those explicitly allowed by the owner during the 30-minute window.
+ * Restricts ALL non-essential packages except those explicitly allowed by the owner during the 2-hour window.
  *
  * Window-change events can originate from the blocking overlay itself. This
  * service checks the real underlying application window instead of treating
