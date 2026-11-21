@@ -26,3 +26,5 @@
 GitHub Actions PR build validates that the APK can be compiled.
 
 CI retry after setup tool correction.
+
+Android SDK package install retry.
