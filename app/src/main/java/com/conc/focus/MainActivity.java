@@ -140,7 +140,7 @@ public class MainActivity extends Activity {
         TextView brand = text("CONC  ✦", 29, purple, true);
         content.addView(brand);
         addGap(content, 4);
-        content.addView(text("30분을 온전히 내 시간으로", 14, Color.DKGRAY, false));
+        content.addView(text("2시간을 온전히 내 시간으로", 14, Color.DKGRAY, false));
         addGap(content, 20);
 
         LinearLayout statusBox = column();
@@ -149,17 +149,17 @@ public class MainActivity extends Activity {
         clockLabel = text("", 23, dark, true);
         statusBox.addView(clockLabel);
         addGap(statusBox, 5);
-        statusBox.addView(text(active ? "30분 후 허용하지 않은 앱의 차단이 자동으로 풀려요." :
-                "위젯을 한 번 누르면 바로 30분 시작!", 13, Color.DKGRAY, false));
+        statusBox.addView(text(active ? "2시간 후 허용하지 않은 앱의 차단이 자동으로 풀려요." :
+                "위젯을 한 번 누르면 바로 2시간 시작!", 13, Color.DKGRAY, false));
         addGap(statusBox, 12);
-        Button begin = button(active ? "집중 중 · 중단 버튼 없음" : "여기서도 30분 집중 시작",
+        Button begin = button(active ? "집중 중 · 중단 버튼 없음" : "여기서도 2시간 집중 시작",
                 !active, () -> {
                     if (!FocusState.isServiceEnabled(this)) {
                         Toast.makeText(this, "접근성 권한부터 켜줘!", Toast.LENGTH_LONG).show();
                         return;
                     }
                     FocusState.begin(this);
-                    Toast.makeText(this, "집중 모드 시작! 30분 동안 화이팅 💜", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "집중 모드 시작! 2시간 집중 💜", Toast.LENGTH_SHORT).show();
                     render();
                 });
         begin.setEnabled(!active);
