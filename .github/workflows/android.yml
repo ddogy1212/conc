@@ -6,47 +6,40 @@ on:
     paths-ignore:
       - 'downloads/**'
   workflow_dispatch:
-  issues:
-    types: [opened]
   pull_request:
     branches: [main]
 
 permissions:
-  contents: write
+  contents: read
+
+concurrency:
+  group: conc-android-build-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          persist-credentials: true
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '17'
-      - uses: android-actions/setup-android@v3
-        with:
-          packages: 'platforms;android-35 build-tools;35.0.0'
       - uses: gradle/actions/setup-gradle@v4
         with:
-          gradle-version: '8.9'
+          gradle-version: '8.11.1'
+      - name: Prepare Android SDK
+        shell: bash
+        run: |
+          SDKMANAGER="$(find "$ANDROID_HOME/cmdline-tools" -name sdkmanager -type f | head -1)"
+          test -n "$SDKMANAGER"
+          yes | "$SDKMANAGER" --licenses >/dev/null || true
+          "$SDKMANAGER" 'platforms;android-35' 'build-tools;35.0.0'
       - name: Build APK
         run: gradle :app:assembleDebug --no-daemon --stacktrace
-      - name: Upload APK artifact
+      - name: Upload installable APK
         uses: actions/upload-artifact@v4
         with:
-          name: conc-debug-apk
+          name: CONC-2h-photo-only-debug-APK
           path: app/build/outputs/apk/debug/app-debug.apk
-      - name: Publish direct-download APK to repository
-        if: github.event_name != 'pull_request'
-        run: |
-          mkdir -p downloads
-          cp app/build/outputs/apk/debug/app-debug.apk downloads/conc-debug.apk
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add downloads/conc-debug.apk
-          if ! git diff --cached --quiet; then
-            git commit -m "Publish CONC Android APK [skip ci]"
-            git push
-          fi
+          if-no-files-found: error
